@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand (Forest Green) -->
+    <color name="primary_green">#2E7D32</color>
+    <color name="primary_green_dark">#1B5E20</color>
+    <color name="primary_green_light">#A5D6A7</color>
+
+    <!-- Secondary Brand (Sky Blue) -->
+    <color name="secondary_blue">#0288D1</color>
+    <color name="secondary_blue_dark">#01579B</color>
+
+    <!-- Backgrounds (Sage/Neutral) -->
+    <color name="background_sage">#F1F8E9</color>
+    <color name="surface_white">#FFFFFF</color>
+    
+    <!-- Status Colors -->
+    <color name="status_open">#4CAF50</color> <!-- Green -->
+    <color name="status_signed">#2196F3</color> <!-- Blue -->
+    <color name="status_pending">#FF9800</color> <!-- Orange -->
+
+    <!-- Text -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    
+    <!-- Standard -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

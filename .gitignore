@@ -1,0 +1,30 @@
+# ===========================
+# ANDROID
+# ===========================
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+app/build/
+
+# ===========================
+# SPRING BOOT / MAVEN
+# ===========================
+backend/target/
+backend/uploads/
+
+# ===========================
+# IDE & OS
+# ===========================
+.vscode/
+*.class
+Thumbs.db

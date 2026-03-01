@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:background="@color/primary_green"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/img_nav_profile"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="వినియోగదారు చిత్రం (User Image)"
+        android:paddingTop="8dp"
+        android:src="@drawable/ic_person"
+        app:tint="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_nav_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="వినియోగదారు పేరు (User Name)"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_nav_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+91 XXXXXXXXXX"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

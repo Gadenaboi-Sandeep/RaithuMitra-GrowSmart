@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="పరికరం జాబితాలో చేర్చండి (List Equipment)"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="పరికరం పేరు (ఉదా: ట్రాక్టర్) (Equipment Name)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEqName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="రకం (ఉదా: ట్రాక్టర్, హార్వెస్టర్) (Type)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEqType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="గంటకు ధర (ఉదా: ₹900) (Hourly Rate)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEqRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="ప్రాంతం (Location)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEqLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSelectImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="పరికరం చిత్రం ఎంచుకోండి (Select Equipment Image)"
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        <ImageView
+            android:id="@+id/ivEquipmentImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:background="#E0E0E0"
+            android:contentDescription="పరికరం చిత్రం (Equipment Image)"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnAddEquipment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="పరికరం చేర్చండి (Add Equipment)"
+            android:layout_marginTop="24dp"/>
+
+    </LinearLayout>
+</ScrollView>

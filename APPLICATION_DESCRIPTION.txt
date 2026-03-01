@@ -1,0 +1,429 @@
+================================================================================
+                        RAITHU MITRA - APPLICATION DESCRIPTION
+                        Complete Technical & Functional Documentation
+                        Generated: 2026-02-25
+================================================================================
+
+--------------------------------------------------------------------------------
+1. APPLICATION OVERVIEW
+--------------------------------------------------------------------------------
+
+Name          : RaithuMitra (రైతు మిత్ర)
+Meaning       : "Farmer's Friend" in Telugu
+Type          : Native Android Mobile Application
+Target Region : Andhra Pradesh / Telangana, India (Telugu-language localized)
+Purpose       : A digital marketplace and management platform designed to
+                bridge the gap between farmers, agricultural equipment owners,
+                agricultural laborers/workers, and corporate agri-businesses.
+                The app enables contract farming, equipment rental, and labor
+                hiring — all through a unified mobile platform.
+
+Tagline       : Empowering Farmers, Connecting the Agricultural Ecosystem
+
+--------------------------------------------------------------------------------
+2. PROBLEM STATEMENT
+--------------------------------------------------------------------------------
+
+Indian farmers — especially small and medium land-holders — face persistent
+challenges:
+  - Difficulty finding and renting agricultural equipment at affordable rates.
+  - Lack of a structured system to hire reliable agricultural laborers.
+  - No direct channel between farmers and corporates for contract farming.
+  - Manual, unorganized processes that lead to inefficiency and financial loss.
+
+RaithuMitra addresses all these challenges through a single, role-based mobile
+application available in the Telugu language for accessibility.
+
+--------------------------------------------------------------------------------
+3. USER ROLES
+--------------------------------------------------------------------------------
+
+The application supports four distinct user roles, each with a tailored
+interface and feature set:
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │ Role      │ Telugu Label  │ Description & Capabilities                   │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │ FARMER    │ రైతు          │ Primary user. Can:                           │
+  │           │               │  - View and sign contract farming agreements  │
+  │           │               │  - Browse and book agricultural equipment     │
+  │           │               │  - Browse and hire agricultural laborers      │
+  │           │               │  - View dashboard summaries (Home screen)     │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │ CORPORATE │ కార్పొరేట్    │ Agri-business entity. Can:                   │
+  │           │               │  - Create contract farming proposals          │
+  │           │               │  - View and manage farmer contracts           │
+  │           │               │  - Sign contracts with farmers                │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │ OWNER     │ యజమాని       │ Equipment owner. Can:                         │
+  │           │               │  - List agricultural equipment for rent       │
+  │           │               │  - Manage equipment inventory                 │
+  │           │               │  - Accept or Reject incoming booking requests │
+  │           │               │  - Track Pending and Ongoing bookings         │
+  ├──────────────────────────────────────────────────────────────────────────┤
+  │ WORKER    │ కూలీ          │ Agricultural laborer. Can:                    │
+  │           │               │  - Create and manage a labor profile          │
+  │           │               │  - View incoming labor hire requests           │
+  │           │               │  - Accept or reject hiring requests            │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+--------------------------------------------------------------------------------
+4. CORE FEATURES & MODULES
+--------------------------------------------------------------------------------
+
+4.1 AUTHENTICATION MODULE
+--------------------------
+  - User Registration (Signup) with role selection:
+      FARMER, CORPORATE, WORKER, OWNER
+  - User Login with JWT-based authentication
+  - Persistent session management via Android SharedPreferences
+  - Secure token storage and automatic injection into API calls
+  - Auto-logout on session expiry / manual logout from Navigation Drawer
+  - User profile data (name, phone, address) persisted locally
+
+4.2 HOME / DASHBOARD (Landing Page)
+-------------------------------------
+  - Role-specific dashboard shown after login
+  - Summary cards showing:
+      • NUMBER OF ACTIVE CONTRACTS
+      • AVAILABLE EQUIPMENT count
+      • AVAILABLE LABORERS count
+      • PENDING REQUESTS count (for Owners)
+  - Quick-action navigation to all modules
+  - Swipe-to-Refresh support for live data reload
+  - Equipment booking request management for Owners (Accept/Reject)
+  - Labor hiring request management for Workers
+
+4.3 CONTRACT MODULE (ఒప్పందాలు)
+----------------------------------
+  - Browse available contract farming opportunities
+  - Create new contract proposals (Corporate users)
+  - View contract details: crop type, location, duration, payment terms
+  - Sign contracts digitally (one-click signing)
+  - Local caching of contracts via Room database
+  - Sync with remote server on every load
+
+4.4 EQUIPMENT MODULE (అద్దె / ఇన్వెంటరీ)
+-------------------------------------------
+  - Browse available agricultural equipment for rent
+  - Equipment details: type, owner name, price, availability
+  - Book equipment by submitting a booking request
+  - Add new equipment listings (Owner role)
+  - Upload equipment images via multipart file upload
+  - Delete own equipment listings
+  - Owner dashboard for managing received booking requests:
+      Status flow: PENDING → CONFIRMED / REJECTED
+  - Local caching via Room database
+
+4.5 LABOR MODULE (కూలీలు / పనులు)
+-------------------------------------
+  - Browse available agricultural laborers
+  - View laborer profiles: name, skill set, daily rate, availability
+  - Hire laborers by submitting hiring requests
+  - Create / register a labor profile (Worker role)
+  - Owner/Farmer view of received hiring requests with Accept/Reject
+  - Status tracking: PENDING → CONFIRMED / REJECTED
+  - Local caching via Room database
+
+4.6 PROFILE MODULE
+-------------------
+  - View personal profile: name, phone number, address
+  - Accessible via the Navigation Drawer
+  - Data is fetched from session and displayed
+
+4.7 NAVIGATION
+---------------
+  - Bottom Navigation Bar — role-aware, shows only relevant tabs:
+      FARMER  : Home | Contracts | Equipment | Labor
+      CORPORATE: Home | Contracts
+      WORKER  : Home | Labor (Jobs)
+      OWNER   : Home | Equipment (Inventory)
+  - Side Navigation Drawer with:
+      Profile link
+      Logout button
+      User name & phone number in header
+
+--------------------------------------------------------------------------------
+5. ANDROID TECHNOLOGY STACK
+--------------------------------------------------------------------------------
+
+5.1 LANGUAGE & PLATFORM
+  - Language        : Java (Android)
+  - Min SDK         : Android API compatible (network security config for API 31+)
+  - Build Tool      : Gradle (Android Gradle Plugin)
+  - IDE             : Android Studio
+
+5.2 ARCHITECTURE PATTERN
+  - Pattern         : MVVM (Model-View-ViewModel)
+  - Layers:
+      ┌─────────────────────────────┐
+      │  UI Layer (Activities &     │
+      │  Fragments)                 │  ──► Observes LiveData
+      ├─────────────────────────────┤
+      │  ViewModel Layer            │  ──► Holds UI state, calls Repo
+      ├─────────────────────────────┤
+      │  Repository Layer           │  ──► Decides: Local DB or Remote API
+      ├─────────────────────────────┤
+      │  Data Sources               │
+      │  ├── Room (Local DB)        │  ──► Offline caching
+      │  └── Retrofit (Remote API)  │  ──► Live REST API calls
+      └─────────────────────────────┘
+
+5.3 UI COMPONENTS & LIBRARIES
+  - AndroidX AppCompat
+  - Fragment (Navigation via FragmentManager)
+  - Material Design Components (Google Material 3):
+      • BottomNavigationView
+      • NavigationView (Drawer)
+      • MaterialCardView
+      • SwipeRefreshLayout
+  - ConstraintLayout / LinearLayout for XML layouts
+  - RecyclerView for lists
+  - ImageView, TextView, EditText, Button
+
+5.4 NETWORKING
+  - HTTP Client     : Retrofit 2 (Square)
+  - JSON Parser     : Gson (via Retrofit Gson Converter)
+  - HTTP Interceptor: OkHttp + AuthInterceptor
+                      (auto-attaches JWT Bearer token to all requests)
+  - File Upload     : Multipart form-data via OkHttp MultipartBody.Part
+  - Base URL        : Configurable (points to local Spring Boot server)
+
+5.5 LOCAL STORAGE
+  - Room Database   : SQLite ORM (androidx.room)
+    - Database Name : raithu_mitra_db
+    - Version       : 8
+    - Entities:
+        • Contract     — id, title, cropType, location, duration, status, etc.
+        • Equipment    — id, name, type, ownerName, pricePerDay, availability
+        • Laborer      — id, name, skills, dailyRate, availability
+        • EquipmentBooking — booking request entity
+        • LaborHiring      — hiring request entity
+    - DAOs          : ContractDao, EquipmentDao, LaborerDao
+  - SharedPreferences:
+    - Pref Name     : RaithuMitraSession
+    - Keys Stored   : jwt_token, user_role, user_name, user_phone, user_address
+
+5.6 PERMISSIONS
+  - INTERNET                — Required for all API communication
+  - ACCESS_NETWORK_STATE    — For checking network availability
+
+5.7 viewmodels
+  - LoginViewModel         — Handles login/signup API calls
+  - ContractViewModel      — CRUD operations for contracts
+  - EquipmentViewModel     — CRUD + booking for equipment
+  - LaborViewModel         — CRUD + hiring for labor
+
+5.8 SECURITY
+  - JWT token stored in SharedPreferences
+  - AuthInterceptor automatically adds "Authorization: Bearer <token>" header
+  - Network Security Config allows cleartext traffic (for local dev server)
+  - Session is cleared on logout
+
+--------------------------------------------------------------------------------
+6. BACKEND TECHNOLOGY STACK
+--------------------------------------------------------------------------------
+
+6.1 FRAMEWORK & LANGUAGE
+  - Language        : Java 17
+  - Framework       : Spring Boot 3.2.2
+  - Build Tool      : Apache Maven
+  - Artifact        : raithu-mitra-backend (JAR)
+  - Server Port     : Default (8080)
+
+6.2 BACKEND MODULES / DEPENDENCIES
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │ Dependency                      │ Purpose                              │
+  ├────────────────────────────────────────────────────────────────────────┤
+  │ spring-boot-starter-web         │ REST API / HTTP server (Tomcat)      │
+  │ spring-boot-starter-data-jpa    │ Database ORM via Hibernate / JPA     │
+  │ spring-boot-starter-security    │ Authentication & Authorization       │
+  │ spring-security-test            │ Security integration testing         │
+  │ mysql-connector-j               │ MySQL JDBC driver                    │
+  │ jjwt-api (v0.11.5)              │ JWT token creation (API)             │
+  │ jjwt-impl (v0.11.5)             │ JWT token implementation             │
+  │ jjwt-jackson (v0.11.5)          │ JWT JSON serialization via Jackson   │
+  │ lombok                          │ Boilerplate reduction (@Getter, etc.)│
+  │ spring-boot-starter-test        │ Unit & Integration testing           │
+  └────────────────────────────────────────────────────────────────────────┘
+
+6.3 DATABASE
+  - Database        : MySQL (Relational Database)
+  - ORM             : Hibernate (via Spring Data JPA)
+  - Tables (inferred from API and entities):
+      • users         — stores user credentials and role
+      • contracts     — contract farming agreements
+      • equipment     — equipment listings
+      • equipment_bookings — booking requests from farmers
+      • laborers      — labor profiles
+      • labor_hirings — labor hiring requests
+      • files/uploads — uploaded files metadata
+
+6.4 REST API ENDPOINTS
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │ Method │ Endpoint                     │ Description                    │
+  ├────────────────────────────────────────────────────────────────────────┤
+  │ POST   │ /api/auth/signup             │ User registration               │
+  │ POST   │ /api/auth/login              │ User login, returns JWT token   │
+  │ GET    │ /api/contracts               │ Fetch all contracts             │
+  │ POST   │ /api/contracts               │ Create a new contract           │
+  │ PUT    │ /api/contracts/{id}/sign     │ Sign a contract                 │
+  │ GET    │ /api/equipment               │ Fetch all equipment listings    │
+  │ POST   │ /api/equipment               │ Add new equipment               │
+  │ POST   │ /api/equipment/book          │ Book equipment (farmer)         │
+  │ DELETE │ /api/equipment/{id}          │ Delete an equipment listing     │
+  │ GET    │ /api/bookings/received       │ Get received booking requests   │
+  │ PUT    │ /api/bookings/{id}/status    │ Update booking status           │
+  │ GET    │ /api/labor                   │ Fetch all laborers              │
+  │ POST   │ /api/labor/profile           │ Create laborer profile          │
+  │ POST   │ /api/labor/hire              │ Send labor hire request         │
+  │ GET    │ /api/labor/received          │ Get received hire requests      │
+  │ PUT    │ /api/labor/{id}/status       │ Update hire request status      │
+  │ POST   │ /api/files/upload            │ Upload a file (multipart)       │
+  └────────────────────────────────────────────────────────────────────────┘
+
+6.5 SECURITY MODEL
+  - Spring Security configuration for role-based access control
+  - JWT (JSON Web Token) used for stateless authentication
+  - All protected endpoints require a valid Bearer token header
+  - Tokens are issued at login and validated on each request
+  - File uploads stored in the /uploads directory on the server
+
+--------------------------------------------------------------------------------
+7. PROJECT DIRECTORY STRUCTURE
+--------------------------------------------------------------------------------
+
+RaithuMitra(Android)/
+├── app/
+│   └── src/
+│       └── main/
+│           ├── AndroidManifest.xml             # App configuration & activities
+│           ├── java/com/raithumitra/
+│           │   ├── data/
+│           │   │   ├── local/
+│           │   │   │   ├── AppDatabase.java    # Room DB setup (Singleton)
+│           │   │   │   ├── SessionManager.java # SharedPreferences wrapper
+│           │   │   │   ├── dao/                # Room DAOs (3 DAOs)
+│           │   │   │   └── entity/             # Room entities (6 entities)
+│           │   │   ├── remote/
+│           │   │   │   ├── ApiService.java     # Retrofit API interface
+│           │   │   │   ├── RetrofitClient.java # Retrofit singleton factory
+│           │   │   │   ├── AuthInterceptor.java# OkHttp JWT interceptor
+│           │   │   │   └── model/              # API request/response models
+│           │   │   └── repository/             # Repository classes (5 repos)
+│           │   ├── ui/
+│           │   │   ├── auth/                   # Login & Signup Activities
+│           │   │   ├── main/                   # MainActivity, LandingPageFragment
+│           │   │   ├── contract/               # Contract Fragment & Activities
+│           │   │   ├── equipment/              # Equipment Fragment & Activities
+│           │   │   ├── labor/                  # Labor Fragment & Activities
+│           │   │   ├── profile/                # Profile Fragment
+│           │   │   └── base/                   # Base classes
+│           │   ├── viewmodel/                  # ViewModels (4 VMs)
+│           │   └── utils/                      # Utility/helper classes (3)
+│           └── res/                            # XML layouts, drawables, strings
+├── backend/
+│   ├── pom.xml                                 # Maven build config
+│   ├── RELEASE_NOTES.md                        # Recent feature release notes
+│   ├── src/main/                               # Spring Boot source code
+│   └── uploads/                                # Server-side uploaded files
+├── build.gradle                                # Project-level Gradle config
+├── settings.gradle                             # Module settings
+└── gradle.properties                           # Gradle properties
+
+--------------------------------------------------------------------------------
+8. LOCALIZATION / LANGUAGE SUPPORT
+--------------------------------------------------------------------------------
+
+  - Primary Language   : Telugu (తెలుగు)
+  - Secondary Language : English (labels in parentheses where applicable)
+  - UI labels, navigation tabs, and form fields are in Telugu
+  - Examples:
+      • Home          → హోమ్
+      • Contracts     → ఒప్పందాలు
+      • Equipment     → అద్దె (Rental) / ఇన్వెంటరీ (Inventory for Owners)
+      • Labor         → కూలీలు (Farmers) / పనులు (Workers — for jobs)
+      • Profile       → ప్రొఫైల్
+      • Logout        → లాగ్అవుట్
+
+--------------------------------------------------------------------------------
+9. APPLICATION WORKFLOW SUMMARY
+--------------------------------------------------------------------------------
+
+  ┌──────────────────────────────────────────────────────────┐
+  │   FARMER WORKFLOW                                        │
+  │   Login → Dashboard → Browse Contracts → Sign Contract  │
+  │                     → Browse Equipment → Book Equipment │
+  │                     → Browse Laborers → Hire Laborer    │
+  └──────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────────────────────────────────────┐
+  │   CORPORATE WORKFLOW                                     │
+  │   Login → Dashboard → Create Contract → View Signed      │
+  │           Contracts from Farmers                         │
+  └──────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────────────────────────────────────┐
+  │   OWNER WORKFLOW                                         │
+  │   Login → Dashboard → Add Equipment → View Booking       │
+  │           Requests → Accept / Reject Bookings            │
+  └──────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────────────────────────────────────┐
+  │   WORKER WORKFLOW                                        │
+  │   Login → Dashboard → Create Labor Profile → View Hire  │
+  │           Requests → Accept / Reject Requests            │
+  └──────────────────────────────────────────────────────────┘
+
+--------------------------------------------------------------------------------
+10. KEY DESIGN DECISIONS
+--------------------------------------------------------------------------------
+
+  1. OFFLINE-FIRST CACHING:
+     Room database is used to cache contracts, equipment, and laborers locally.
+     This allows users in areas with intermittent connectivity to still view data.
+
+  2. ROLE-BASED UI:
+     The bottom navigation bar is built programmatically based on the user's
+     role stored in SharedPreferences, ensuring a clean, uncluttered experience.
+
+  3. MVVM ARCHITECTURE:
+     Separates UI logic from business logic. ViewModels survive configuration
+     changes (e.g., screen rotation) and provide LiveData streams to the UI.
+
+  4. REPOSITORY PATTERN:
+     Repositories abstract the data source (remote vs. local), making it easy
+     to add new sources or mock data for testing.
+
+  5. JWT AUTHENTICATION:
+     Stateless authentication ensures the server doesn't maintain session state,
+     making the backend horizontally scalable.
+
+  6. TELUGU LOCALIZATION:
+     Full Telugu-language UI ensures accessibility for rural farmers who may
+     not be comfortable with English-only interfaces.
+
+--------------------------------------------------------------------------------
+11. DEVELOPMENT SETUP
+--------------------------------------------------------------------------------
+
+  Android App:
+    1. Open project in Android Studio
+    2. Sync Gradle dependencies
+    3. Configure backend URL in RetrofitClient.java (Base URL)
+    4. Build and run on an Android emulator or physical device
+
+  Backend Server:
+    1. Ensure MySQL is running and the database is created
+    2. Configure application.properties with DB credentials
+    3. Navigate to /backend directory
+    4. Run: mvn spring-boot:run
+    5. Server starts on http://localhost:8080
+
+  Network:
+    - For physical device testing, ensure the device and PC are on the same
+      network and update the base URL to the PC's local IP address.
+
+================================================================================
+                        END OF DOCUMENT - RAITHU MITRA
+================================================================================
