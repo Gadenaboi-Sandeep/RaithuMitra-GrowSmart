@@ -1,0 +1,14 @@
+# Maven build output
+target/
+
+# Uploaded files (these are runtime data, not source code)
+uploads/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
