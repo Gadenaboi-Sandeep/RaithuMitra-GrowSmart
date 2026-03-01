@@ -1,3 +1,10 @@
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true" />
+    <!-- HTTPS is used for Railway production backend -->
+    <base-config cleartextTrafficPermitted="false" />
+    <!-- Allow cleartext only for local development/testing -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.0.0/8</domain>
+        <domain includeSubdomains="true">192.168.0.0/16</domain>
+        <domain includeSubdomains="true">localhost</domain>
+    </domain-config>
 </network-security-config>
